@@ -1,0 +1,21 @@
+{
+  "dev": {
+    "username": "root",
+    "password": "",
+    "database": "todosdb",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "",
+    "database": "todosdb",
+    "host": "localhost"
+  },
+  "prod": {
+    "username": "root",
+    "password": "",
+    "database": "todosdb",
+    "host": "localhost"
+  }
+}
