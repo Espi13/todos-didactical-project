@@ -4,7 +4,7 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 
 let corsOptions = {
-  origin: process.env.CLIENT_ORIGIN || "http://localhost:8000",
+  origin: process.env.CLIENT_ORIGIN || "http://localhost:3000",
 };
 
 const app = express();

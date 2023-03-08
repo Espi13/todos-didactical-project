@@ -1,4 +1,4 @@
-const User = require("../models/user.model");
+const User = require("../models").user;
 const jwt = require("jsonwebtoken");
 
 //Function to check if username or email already exist in the database

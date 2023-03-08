@@ -1,21 +1,24 @@
 {
-  "dev": {
+  "development": {
     "username": "root",
-    "password": "",
+    "password": null,
     "database": "todosdb",
     "host": "localhost",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "port": 3307
   },
   "test": {
     "username": "root",
-    "password": "",
-    "database": "todosdb",
-    "host": "localhost"
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   },
-  "prod": {
+  "production": {
     "username": "root",
-    "password": "",
-    "database": "todosdb",
-    "host": "localhost"
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
   }
 }

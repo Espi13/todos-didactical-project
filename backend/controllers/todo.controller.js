@@ -1,7 +1,8 @@
-const Todo = require("../models/todo.model");
 const moment = require("moment");
+const Todo = require("../models").todo;
 
 const getAllTodos = async (req, res) => {
+  console.log("Valor de todo");
   Todo.findAll()
     .then((result) => {
       return res.json(result);
@@ -51,8 +52,6 @@ const updateTodo = async (req, res) => {
 
 const deleteTodo = async (req, res) => {
   const { id } = req.params;
-
-  console.log("req.params", req.params);
 
   Todo.destroy({ where: { id } })
     .then((result) => {
