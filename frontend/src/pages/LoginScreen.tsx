@@ -126,10 +126,13 @@ const LoginScreen: FC = () => {
     dispatchForm({ type: InputActions.PASSBLUR });
   };
 
-  const submitHandler = (event: MouseEvent<HTMLButtonElement>) => {
+  const submitHandler = async (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     if (emailValid && passwordValid) {
-      auth.logIn(formState.emailValue, formState.passwordValue);
+      const user = await auth.logIn(
+        formState.emailValue,
+        formState.passwordValue
+      );
     } else if (!emailValid) {
       emailInputRef.current!.focus();
     } else {
