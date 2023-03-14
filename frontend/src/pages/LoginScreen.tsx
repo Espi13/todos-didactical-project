@@ -1,12 +1,12 @@
 import {
   ChangeEvent,
   FC,
-  FormEvent,
   useRef,
   useReducer,
   useState,
   MouseEvent,
 } from "react";
+import { useNavigate } from "react-router";
 import Button from "../components/UI/Button/Button";
 import Card from "../components/UI/Card/Card";
 import Input from "../components/UI/Input/Input";
@@ -92,6 +92,9 @@ const formReducer = (state: InputsState, action: InputAction) => {
 
 const LoginScreen: FC = () => {
   const auth = useAuth();
+  const navigate = useNavigate();
+
+  const [loginError, setLoginError] = useState(false);
 
   const [formState, dispatchForm] = useReducer(formReducer, {
     emailValue: "",
@@ -127,12 +130,15 @@ const LoginScreen: FC = () => {
   };
 
   const submitHandler = async (event: MouseEvent<HTMLButtonElement>) => {
+    setLoginError(false);
     event.preventDefault();
     if (emailValid && passwordValid) {
-      const user = await auth.logIn(
-        formState.emailValue,
-        formState.passwordValue
-      );
+      try {
+        await auth.logIn(formState.emailValue, formState.passwordValue);
+        navigate("/todos");
+      } catch {
+        setLoginError(true);
+      }
     } else if (!emailValid) {
       emailInputRef.current!.focus();
     } else {
@@ -142,6 +148,7 @@ const LoginScreen: FC = () => {
 
   return (
     <Card className={classes.login}>
+      {loginError && <p>Su usuario o contraseña no se corresponden</p>}
       <form>
         <Input
           id="email"

@@ -1,5 +1,5 @@
 import { createContext, FC, ReactNode, useContext } from "react";
-import axiosClient from "../middleware/axios-client";
+import axiosClient from "../middleware/AxiosClient";
 import User from "../models/User";
 
 interface IAuthContextProps {
@@ -13,24 +13,35 @@ interface IAuthProviderProps {
   userData: User | null;
   isLoading: boolean;
   children: ReactNode;
+  onUserDataChange: (userData: User) => void;
 }
 
 export const AuthContext = createContext<IAuthContextProps>({
   userData: null,
   isLoading: true,
   isLoggedIn: false,
-  logIn: () => {},
+  logIn: () => User || null,
 });
 
 export const AuthContextProvider: FC<IAuthProviderProps> = ({
   userData,
   isLoading,
   children,
+  onUserDataChange,
 }) => {
   const login = async (email: string, password: string) => {
-    axiosClient.post("login", { email, password }).then((result) => {
-      return result;
+    const result = await axiosClient.post("login", {
+      email,
+      password,
     });
+    if (result) {
+      localStorage.setItem("userData", JSON.stringify(result.data));
+      onUserDataChange(result.data);
+      return result;
+    } else {
+      return null;
+    }
+    // onUserDataChange(result);
   };
   const authContext = {
     userData,

@@ -38,18 +38,22 @@ const login = async (req, res) => {
     where: { email },
   })
     .then((result) => {
-      if (md5(password) === result.password) {
-        result.dataValues.jwt = jwt.sign(
-          { id: result.id },
-          process.env.SECRET_KEY,
-          {
-            expiresIn: "2h",
-          }
-        );
-        delete result.dataValues.password;
-        return res.json(result);
+      if (result) {
+        if (md5(password) === result.password) {
+          result.dataValues.jwt = jwt.sign(
+            { id: result.id },
+            process.env.SECRET_KEY,
+            {
+              expiresIn: "2h",
+            }
+          );
+          delete result.dataValues.password;
+          return res.json(result);
+        } else {
+          return res.status(401).send("Authentication failed");
+        }
       } else {
-        return res.status(401).send("Authentication failed");
+        return res.status(500).json({ message: "User not found" });
       }
     })
     .catch((error) => {

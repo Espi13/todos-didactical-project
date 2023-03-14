@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { Route, Routes } from "react-router";
 import "./App.css";
-import axiosClient from "./middleware/axios-client";
-import Todo from "./models/Todo";
 import User from "./models/User";
 import LoginScreen from "./pages/LoginScreen";
 import TodosScreen from "./pages/TodosScreen";
-import { AuthContextProvider, useAuth } from "./store/AuthContext";
+import ProtectedRoute from "./services/AuthRouter";
+import { AuthContextProvider } from "./store/AuthContext";
+import { TodosContextProvider } from "./store/TodosContext";
 
 function App() {
   const [userData, setUserData] = useState<User | null>(null);
@@ -17,20 +18,24 @@ function App() {
     setLaoding(false);
   }, []);
 
-  useEffect(() => {
-    axiosClient
-      .get<Todo[]>("todos")
-      .then((resp) => {
-        console.log("Valor de resp", resp);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
   return (
-    <AuthContextProvider userData={userData} isLoading={loading}>
-      <LoginScreen />
-      <TodosScreen />
+    <AuthContextProvider
+      userData={userData}
+      isLoading={loading}
+      onUserDataChange={setUserData}
+    >
+      <TodosContextProvider>
+        {!loading && (
+          <Routes>
+            <Route
+              path="todos"
+              element={<ProtectedRoute outlet={<TodosScreen />} />}
+            />
+
+            <Route path="login" element={<LoginScreen />} />
+          </Routes>
+        )}
+      </TodosContextProvider>
     </AuthContextProvider>
   );
 }

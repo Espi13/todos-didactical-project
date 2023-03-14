@@ -1,11 +1,14 @@
-import { FC } from "react";
-import { useAuth } from "../store/AuthContext";
+import { FC, useEffect } from "react";
+import AddEditTodo from "../components/Todos/AddEditTodo";
+import TodoList from "../components/Todos/TodoList";
 
 const TodosScreen: FC = () => {
-  const auth = useAuth();
-
-  console.log("Valor de auth", auth);
-  return <h1>Todos</h1>;
+  return (
+    <>
+      <AddEditTodo />
+      <TodoList />
+    </>
+  );
 };
 
 export default TodosScreen;

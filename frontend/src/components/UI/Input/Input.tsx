@@ -17,7 +17,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
     return (
       <div
         className={`${classes.control} ${
-          isValid == false ? classes.invalid : ""
+          isValid === false ? classes.invalid : ""
         }`}
       >
         <label htmlFor={id}>{label}</label>

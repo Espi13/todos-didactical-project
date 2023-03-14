@@ -1,4 +1,4 @@
-import { ButtonHTMLAttributes, FC, MouseEvent, ReactNode } from "react";
+import { ButtonHTMLAttributes, FC, MouseEvent } from "react";
 
 import classes from "./Button.module.css";
 

@@ -9,7 +9,7 @@ module.exports = (app) => {
   app.post("/api/login", userController.login);
 
   //Todos
-  app.get("/api/todos", todoController.getAllTodos);
+  app.get("/api/todos", userAuth.checkToken, todoController.getAllTodos);
 
   // app.get("/api/todos", userAuth.checkToken, todoController.getAllTodos);
 
